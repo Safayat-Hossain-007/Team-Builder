@@ -3,6 +3,7 @@ import User from './User'; // Assuming User component is imported correctly
 
 function App() {
   const [users, setUsers] = useState([]);
+  const [team,setTeam] = useState([]);
 
   useEffect(() => {
     fetch('https://randomuser.me/api/?results=15')
@@ -20,13 +21,18 @@ function App() {
   }, []); // Empty dependency array for one-time fetch
 
   const addMember = (name) => {
-    console.log('Member added:', name);
+    setTeam([...team,name])
     // You can perform further actions here, such as updating state or calling APIs
   };
 
   return (
     <div>
       <h1>Team builder</h1>
+      <ul>
+        {
+          team.map((m,idx) => <li key={idx}>{m}</li>)
+        }
+      </ul>
       {/* Check if users is an array before mapping */}
       {users && users.map(user => (
         <User key={user.login.uuid} user={user} addMember={addMember} />
